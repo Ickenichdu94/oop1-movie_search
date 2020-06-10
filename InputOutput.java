@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.Scanner;
+
+import oop1movie_search.*;
 
 public class InputOutput {
 
@@ -20,6 +23,11 @@ public class InputOutput {
 	}
 //4. Input scannen vom User
 
-//Try Catch einbauen für die Eingabe! 
+	Scanner scannerVariable = new Scanner(System.in);
+	System.out.println("Sie haben " + scannerVariable.nextLine()" eingegeben.");
 	
+	String inputString = "";
+	int searchType = 0;
+//Try Catch einbauen für die Eingabe! 
+	SearchFunction.main(inputString, searchType);
 }
