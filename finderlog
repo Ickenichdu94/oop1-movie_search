@@ -1,0 +1,38 @@
+public class Finderlog {
+	   
+	  
+
+	  public <T> ArrayList<T> find(Collection<T> coll, Map<String, ?> find, boolean andMatch) throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
+
+	    if (coll.size() < 1) {
+	      return new ArrayList<T>();
+	    }
+	    @SuppressWarnings("unchecked")
+	    Class<T> cls = (Class<T>)coll.toArray()[0].getClass();
+	    ArrayList<T> result = new ArrayList<T>();
+	    Field[] fields = new Field[find.size()];
+	    int pos = 0;
+	    for (String s : find.keySet()) {
+	      fields[pos] = cls.getDeclaredField(s);
+	      fields[pos++].setAccessible(true);
+	    }
+	    boolean match = true;
+	    for (T t : coll) {
+	      match = andMatch;
+	      for (Field f : fields) {
+	        if (andMatch && !f.get(t).equals(find.get(f.getName()))) {
+	          match = false;
+	          break;
+	        }
+	        else if (!andMatch && f.get(t).equals(find.get(f.getName()))) {
+	          match = true;
+	          break;
+	        }
+	      }
+	      if (match) {
+	        result.add(t);
+	      }
+	    }
+	    return result;
+	  }
+	}
